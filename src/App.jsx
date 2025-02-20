@@ -1,8 +1,11 @@
 import React from "react";
-
+import { BrowserRouter } from "react-router-dom";
+import Router from "./Router";
 const App = () => {
   return (
-    <div className="text-2xl text-purple-400 font-bold">Hackathon 2025</div>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   );
 };
 
