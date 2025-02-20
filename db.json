@@ -1,0 +1,114 @@
+{
+  "flights": [
+    {
+      "id": "1",
+      "flightName": "Air India",
+      "flightNumber": "AI201",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "8:00 AM",
+      "arrivalTime": "10:30 AM",
+      "seatsAvailable": 25
+    },
+    {
+      "id": "2",
+      "flightName": "IndiGo",
+      "flightNumber": "6E301",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "9:00 AM",
+      "arrivalTime": "11:30 AM",
+      "seatsAvailable": 20
+    },
+    {
+      "id": "3",
+      "flightName": "SpiceJet",
+      "flightNumber": "SG401",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "11:00 AM",
+      "arrivalTime": "1:30 PM",
+      "seatsAvailable": 18
+    },
+    {
+      "id": "4",
+      "flightName": "GoAir",
+      "flightNumber": "G8201",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "1:00 PM",
+      "arrivalTime": "3:30 PM",
+      "seatsAvailable": 22
+    },
+    {
+      "id": "5",
+      "flightName": "Vistara",
+      "flightNumber": "UK501",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "2:00 PM",
+      "arrivalTime": "4:45 PM",
+      "seatsAvailable": 19
+    },
+    {
+      "id": "6",
+      "flightName": "AirAsia",
+      "flightNumber": "I5201",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "4:00 PM",
+      "arrivalTime": "6:30 PM",
+      "seatsAvailable": 24
+    },
+    {
+      "id": "7",
+      "flightName": "Akasa Air",
+      "flightNumber": "QP601",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "5:00 PM",
+      "arrivalTime": "7:30 PM",
+      "seatsAvailable": 21
+    },
+    {
+      "id": "8",
+      "flightName": "IndiGo",
+      "flightNumber": "6E701",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "6:00 PM",
+      "arrivalTime": "8:45 PM",
+      "seatsAvailable": 16
+    },
+    {
+      "id": "9",
+      "flightName": "SpiceJet",
+      "flightNumber": "SG801",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "7:00 PM",
+      "arrivalTime": "9:30 PM",
+      "seatsAvailable": 23
+    },
+    {
+      "id": "10",
+      "flightName": "Vistara",
+      "flightNumber": "UK901",
+      "from": "Jabalpur",
+      "to": "Hyderabad",
+      "date": "2025-02-21",
+      "departureTime": "8:00 PM",
+      "arrivalTime": "10:45 PM",
+      "seatsAvailable": 20
+    }
+  ]
+}

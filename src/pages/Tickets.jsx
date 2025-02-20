@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../backend/firebase";
-import AvailableTrains from "./AvailableTrains"; // Import the AvailableTrains component
+import { useNavigate } from "react-router-dom";
 
 const Tickets = () => {
   const [to, setTo] = useState("");
   const [from, setFrom] = useState("");
   const [date, setDate] = useState("");
   const [mode, setMode] = useState("");
-  const [showTrains, setShowTrains] = useState(false); // State to toggle train display
+  const navigate = useNavigate();
 
-  // City list
+  // Cities List
   const cities = [
     "Jabalpur",
     "Katni",
@@ -43,30 +41,22 @@ const Tickets = () => {
     "Chandigarh",
   ];
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!to || !from || !date || !mode) {
       alert("Please fill in all fields!");
       return;
     }
-    console.log("Submitting the following data:", { to, from, date, mode });
+    const navigationPath =
+      mode === "Bus"
+        ? "/available-buses"
+        : mode === "Train"
+        ? "/available-trains"
+        : "/available-flights";
 
-    try {
-      // Add ticket data to Firestore
-      await addDoc(collection(db, "tickets"), {
-        to,
-        from,
-        date,
-        mode,
-        createdAt: new Date(),
-      });
-
-      alert(`Ticket from ${from} to ${to} by ${mode} submitted successfully!`);
-      setShowTrains(true); // Show AvailableTrains component after successful submission
-    } catch (error) {
-      console.error("Error adding ticket: ", error);
-      alert("Failed to submit the ticket.");
-    }
+    navigate(navigationPath, { state: { from, to, date, mode } });
+    // Navigate to the AvailableTrains page and pass the form data via state
+    // navigate("/available-trains", { state: { to, from, date, mode } });
   };
 
   return (
@@ -75,42 +65,35 @@ const Tickets = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <h1 className="text-4xl font-bold text-center">Book a Ticket</h1>
 
-          {/* From Dropdown */}
+          {/* From Input with Datalist */}
           <div>
             <label className="block">From:</label>
-            <select
+            <input
+              type="text"
+              list="cities-list"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
               className="border p-2 w-full"
-            >
-              <option value="" disabled>
-                Select a city
-              </option>
-              {cities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
+              placeholder="Select a city"
+            />
+            <datalist id="cities-list">
+              {cities.map((city, index) => (
+                <option key={index} value={city} />
               ))}
-            </select>
+            </datalist>
           </div>
 
-          {/* To Dropdown */}
+          {/* To Input with Datalist */}
           <div>
             <label className="block">To:</label>
-            <select
+            <input
+              type="text"
+              list="cities-list"
               value={to}
               onChange={(e) => setTo(e.target.value)}
               className="border p-2 w-full"
-            >
-              <option value="" disabled>
-                Select a city
-              </option>
-              {cities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
+              placeholder="Select a city"
+            />
           </div>
 
           {/* Date Input */}
@@ -146,20 +129,26 @@ const Tickets = () => {
               >
                 Train
               </button>
+              <button
+                type="button"
+                className={`p-2 border ${
+                  mode === "Flight" ? "bg-blue-500 text-white" : ""
+                }`}
+                onClick={() => setMode("Flight")}
+              >
+                Flight
+              </button>
             </div>
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded w-full"
+            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-full"
           >
             Submit
           </button>
         </form>
-
-        {/* Render AvailableTrains Component */}
-        {showTrains && <AvailableTrains from={from} to={to} date={date} />}
       </div>
     </div>
   );
