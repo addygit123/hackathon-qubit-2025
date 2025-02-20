@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
-const useTrainStore = create((set) => ({
+const useFlightStore = create((set) => ({
   formData: {
     from: "",
     to: "",
     date: "",
-    mode: "",
+    mode: "Flight", // Default mode set to Flight
   },
   setFormData: (data) => set({ formData: data }),
 }));
 
-export default useTrainStore;
+export default useFlightStore;
