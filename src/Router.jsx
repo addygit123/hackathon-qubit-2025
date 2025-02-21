@@ -29,6 +29,7 @@ const ProtectedRoute = ({ element }) => {
 
   return usr ? element : <Navigate to="/signup" replace />;
 };
+// import TicketDetails from "./components/TicketDetails";
 
 const Router = () => {
   return (
