@@ -12,6 +12,7 @@ import PaymentPageBus from "./pages/PaymentBuses";
 import PaymentPageFlight from "./pages/PaymentFlight";
 import AvailableFlights from "./pages/AvailableFlights";
 import TicketDetails from "./components/TicketDetails";
+import UserList from "./pages/user";
 // import TicketDetails from "./components/TicketDetails";
 
 const Router = () => {
@@ -29,6 +30,7 @@ const Router = () => {
       <Route path="/payment-bus" element={<PaymentPageBus />} />
       <Route path="/payment-flight" element={<PaymentPageFlight />} />
       <Route path="/ticket-details" element={<TicketDetails />} />
+      <Route path="/users" element={<UserList />} />
     </Routes>
   );
 };
