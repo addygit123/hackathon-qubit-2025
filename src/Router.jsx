@@ -18,14 +18,15 @@ const ProtectedRoute = ({ element }) => {
   const [user, setUser] = useState(null);
   const auth = getAuth();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-    return () => unsubscribe(); 
-  }, [auth]);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     setUser(user);
+  //   });
+  //   return () => unsubscribe(); 
+  // }, [auth]);
+  let usr = auth.currentUser
 
-  return user ? element : <Navigate to="/signup" replace />;
+  return usr ? element : <Navigate to="/signup" replace />;
 };
 
 const Router = () => {
