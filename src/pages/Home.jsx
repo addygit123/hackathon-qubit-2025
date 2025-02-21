@@ -78,7 +78,7 @@ function LoginForm() {
           <Button value="Submit" onClick={handleSubmit} />
           <Link to='/signup' className="block text-center mt-4 text-indigo-600 hover:underline">Don't have an account? Sign Up</Link>
         </form>
-        <button className="text-white bg-black px-3 py-1 rounded-md" onClick={() => signout()}>Sign Out</button>
+        {/* <button className="text-white bg-black px-3 py-1 rounded-md" onClick={() => signout()}>Sign Out</button> */}
       </div>
     </div>
   );
