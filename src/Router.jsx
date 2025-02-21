@@ -12,6 +12,7 @@ import PaymentPageBus from "./pages/PaymentBuses";
 import PaymentPageFlight from "./pages/PaymentFlight";
 import AvailableFlights from "./pages/AvailableFlights";
 import TicketDetails from "./components/TicketDetails";
+// import TicketDetails from "./components/TicketDetails";
 
 const Router = () => {
   return (
