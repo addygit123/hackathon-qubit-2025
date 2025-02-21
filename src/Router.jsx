@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import Tickets from "./pages/Tickets";
-import Scanner from "./pages/QRScanner";
+//import Scanner from "./pages/QRScanner";
 import Dashboard from "./pages/Dashboard";
 import AvailableTrains from "./pages/AvailableTrains";
 import PaymentPage from "./pages/Payment";
@@ -36,7 +36,6 @@ const Router = () => {
       <Route path="/" element={<Home />} />
       <Route path="/Booking" element={<Booking />} />
       <Route path="/tickets" element={<ProtectedRoute element={<Tickets />} />} />
-      <Route path="/scanner" element={<Scanner />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/available-trains" element={<ProtectedRoute element={<AvailableTrains />} />} />
