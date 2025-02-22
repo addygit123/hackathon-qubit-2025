@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 const useTrainStore = create((set) => ({
   formData: {
+    name: "",
+    number: "",
     from: "",
     to: "",
     date: "",

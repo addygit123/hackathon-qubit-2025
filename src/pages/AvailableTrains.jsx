@@ -6,7 +6,7 @@ import useTrainStore from "../store/UseStore"; // Update the path to your Zustan
 
 const AvailableTrains = () => {
   const location = useLocation();
-  const { to, from, date, id } = location.state || {}; // Data passed from the Tickets page
+  const { name, number, to, from, date, id } = location.state || {}; // Data passed from the Tickets page
   const [trains, setTrains] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,13 +21,18 @@ const AvailableTrains = () => {
 
       try {
         const response = await fetch(apiUrl);
+
         if (!response.ok) throw new Error("Failed to fetch trains");
         const data = await response.json();
+        console.log(data);
 
         // Filter trains based on user input
         const filteredTrains = data.filter(
           (train) =>
-            train.from === from && train.to === to && train.date === date
+            train.name === name &&
+            train.from === from &&
+            train.to === to &&
+            train.date === date
         );
 
         setTrains(filteredTrains);
@@ -58,11 +63,15 @@ const AvailableTrains = () => {
   const handleBook = (train) => {
     // Update formData in Zustand store
     setFormData({
+      name: train.name,
+      number: train.number,
       from: train.from,
       to: train.to,
       date: train.date,
       mode: "Train", // Add mode here as it's part of formData
     });
+    console.log(setFormData);
+
     // Navigate to PaymentPage with train data
     navigate("/payment", { state: { train } });
   };

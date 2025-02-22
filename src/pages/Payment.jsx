@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useTrainStore from "../store/UseStore";
 import { useTicketStore } from "../store/UseTicketStore";
 import { getFirestore, doc, setDoc } from "firebase/firestore"; // Import Firestore methods
-// import { getAuth } from "firebase/auth"; // Optional if you want to use authenticated users
+import { getAuth } from "firebase/auth"; // Optional if you want to use authenticated users
+import { FaPlus, FaTrash } from "react-icons/fa";
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -13,36 +14,64 @@ const PaymentPage = () => {
   const { setTicketDetails, setQRCode } = useTicketStore();
 
   const [loading, setLoading] = useState(false);
+
+  const [passengers, setPassengers] = useState([{ name: "", age: "" }]);
   const db = getFirestore(); // Initialize Firestore
-  // const auth = getAuth(); // Initialize Auth if needed
+  const auth = getAuth(); // Initialize Auth if needed
+  const user = auth.currentUser;
+
+  // Function to handle input change
+  const handlePassengerChange = (index, field, value) => {
+    const updatedPassengers = [...passengers];
+    updatedPassengers[index][field] = value;
+    setPassengers(updatedPassengers);
+  };
+
+  // Function to add a new passenger
+  const addPassenger = () => {
+    setPassengers([...passengers, { name: "", age: "" }]);
+  };
+
+  // Function to remove a passenger
+  const removePassenger = (index) => {
+    if (passengers.length > 1) {
+      const updatedPassengers = passengers.filter((_, i) => i !== index);
+      setPassengers(updatedPassengers);
+    }
+  };
 
   const handlePayment = async () => {
     try {
       setLoading(true);
+      if (loading) {
+        console.log("loading...");
+      }
 
       // Prepare ticket data
       const ticketData = {
         trainName: train?.trainName || "Unknown Train",
         trainNumber: train?.trainNumber || "Unknown Number",
-        from: formData?.from || "Unknown Station",
-        to: formData?.to || "Unknown Station",
-        date: formData?.date || "Unknown Date",
-        userName: "John Doe", // Replace with user input or auth data
-        userEmail: "johndoe@example.com", // Replace with user input or auth data
-        seatsBooked: 1,
+        from: train?.from || "Unknown Station",
+        to: train?.to || "Unknown Station",
+        date: train?.date || "Unknown Date",
+        passengers,
+        // userName: user?.displayName, // Replace with user input or auth data
+        // userEmail: user?.email, // Replace with user input or auth data
+        seatsBooked: passengers.length,
         paymentStatus: "Paid",
         timestamp: new Date().toISOString(),
       };
+      console.log(ticketData);
 
       // Save to Firestore
       // const userId = auth.currentUser?.uid || "guest_user"; // Use Auth UID or fallback
-      const userId = "addy";
-      const ticketDocRef = doc(
-        db,
-        `users/${userId}/tickets/${new Date().getTime()}`
-      ); // Unique ticket ID
+      // const userId = "addy";
+      // const ticketDocRef = doc(
+      //   db,
+      //   `users/${userId}/tickets/${new Date().getTime()}`
+      // ); // Unique ticket ID
 
-      await setDoc(ticketDocRef, ticketData);
+      // await setDoc(ticketDocRef, ticketData);
 
       // Mock response for QR code (replace with actual API if needed)
       const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
@@ -86,21 +115,74 @@ const PaymentPage = () => {
             <strong>Train Number:</strong> {train.trainNumber}
           </p>
           <p className="mb-2">
-            <strong>From:</strong> {formData.from}
+            <strong>From:</strong> {train.from}
           </p>
           <p className="mb-2">
-            <strong>To:</strong> {formData.to}
+            <strong>To:</strong> {train.to}
           </p>
           <p className="mb-2">
-            <strong>Date:</strong> {formData.date}
+            <strong>Date:</strong> {train.date}
           </p>
+        </div>
+
+        {/* Passenger Details Form */}
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Passenger Details</h2>
+
+          {passengers.map((passenger, index) => (
+            <div key={index} className="mb-4 p-4 bg-gray-100 rounded-md">
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={passenger.name}
+                onChange={(e) =>
+                  handlePassengerChange(index, "name", e.target.value)
+                }
+                className="w-full p-2 mb-2 border rounded"
+              />
+              {/* <input
+                type="email"
+                placeholder="Email"
+                value={passenger.email}
+                onChange={(e) =>
+                  handlePassengerChange(index, "email", e.target.value)
+                }
+                className="w-full p-2 mb-2 border rounded"
+              /> */}
+              <input
+                type="number"
+                placeholder="Age"
+                value={passenger.age}
+                onChange={(e) =>
+                  handlePassengerChange(index, "age", e.target.value)
+                }
+                className="w-full p-2 mb-2 border rounded"
+              />
+              {passengers.length > 1 && (
+                <button
+                  onClick={() => removePassenger(index)}
+                  className="text-red-600 text-sm flex items-center"
+                >
+                  <FaTrash className="mr-2" /> Remove Passenger
+                </button>
+              )}
+            </div>
+          ))}
+
+          {/* Add Passenger Button */}
+          <button
+            onClick={addPassenger}
+            className="flex items-center justify-center w-full text-indigo-600 font-semibold py-2 border rounded mt-3 hover:bg-indigo-100"
+          >
+            <FaPlus className="mr-2" /> Add Passenger
+          </button>
         </div>
 
         {/* Payment Details */}
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-2">Payment Information</h2>
           <p className="mb-2">
-            <strong>Total Amount:</strong> ₹500
+            <strong>Total Amount:</strong> ₹{500 * passengers.length}
           </p>
           <p className="mb-2">
             <strong>Payment Mode:</strong> UPI, Debit Card, Credit Card

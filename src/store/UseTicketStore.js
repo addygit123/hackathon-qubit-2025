@@ -11,3 +11,4 @@ export const useTicketStore = create((set) => ({
 
   // Methods (if needed, e.g., for API calls)
 }));
+export default useTicketStore;

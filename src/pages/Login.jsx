@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signUp } from "../../backend/firemethods";
+import { LogIn } from "../../backend/firemethods";
 import { Link, useNavigate } from "react-router-dom";
 
 function Button({ value, onClick }) {
@@ -40,13 +40,9 @@ function Input({
   );
 }
 
-function SignUpForm() {
+function LoginForm() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,32 +52,22 @@ function SignUpForm() {
     e.preventDefault();
     console.log(formData);
 
-    const res = await signUp(formData);
+    const res = await LogIn(formData);
     console.log(res);
 
     if (res) {
-      alert("Signed Up Successfully!");
-      navigate("/home");
+      alert("Logged in Successfully!");
+      navigate("/tickets");
     } else {
-      alert("Sign Up Failed");
+      alert("Login Failed");
     }
   };
 
   return (
     <div className="bg-gray-200 flex justify-center items-center h-screen w-screen">
       <div className="border-t-8 rounded-sm border-indigo-600 bg-white p-12 shadow-2xl w-96">
-        <h1 className="font-bold text-center block text-2xl">Sign Up</h1>
+        <h1 className="font-bold text-center block text-2xl">Login</h1>
         <form onSubmit={handleSubmit}>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            label="Full Name"
-            placeholder="John Doe"
-            autofocus={true}
-            value={formData.name}
-            onChange={handleChange}
-          />
           <Input
             type="email"
             id="email"
@@ -101,21 +87,20 @@ function SignUpForm() {
             onChange={handleChange}
           />
           <Link
-            to="/login"
+            to="/signup"
             className="block text-center mt-4 text-indigo-600 hover:underline"
           >
-            Already have an account? Login.
+            Don't have an account? Sign up.
           </Link>
-
-          <Button value="Submit" onClick={handleSubmit} />
+          <Button value="Login" onClick={handleSubmit} />
         </form>
       </div>
     </div>
   );
 }
 
-const SignUp = () => {
-  return <SignUpForm />;
+const Login = () => {
+  return <LoginForm />;
 };
 
-export default SignUp;
+export default Login;
