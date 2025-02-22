@@ -62,21 +62,22 @@ const PaymentPage = () => {
         timestamp: new Date().toISOString(),
       };
       console.log(ticketData);
-
-      // Save to Firestore
-      // const userId = auth.currentUser?.uid || "guest_user"; // Use Auth UID or fallback
-      // const userId = "addy";
-      // const ticketDocRef = doc(
-      //   db,
-      //   `users/${userId}/tickets/${new Date().getTime()}`
-      // ); // Unique ticket ID
-
-      // await setDoc(ticketDocRef, ticketData);
-
-      // Mock response for QR code (replace with actual API if needed)
       const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
         JSON.stringify(ticketData)
       )}&size=150x150`;
+
+      const ticketDataWithQR = { ...ticketData, qrCodeURL };
+      // Save to Firestore
+      const userId = auth.currentUser?.uid || "guest_user"; // Use Auth UID or fallback
+      // const userId = "addy";
+      const ticketDocRef = doc(
+        db,
+        `tickets/${userId}/train-tickets/${new Date().getTime()}`
+      ); // Unique ticket ID
+
+      await setDoc(ticketDocRef, ticketDataWithQR);
+
+      // Mock response for QR code (replace with actual API if needed)
 
       // Update Zustand store
       setTicketDetails(ticketData);
